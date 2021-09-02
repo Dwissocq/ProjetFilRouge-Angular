@@ -22,7 +22,7 @@ export class UsersListService {
   }
 
   splitParticipationOrNot() {
-    // while et slice pour injecter la liste des participants dans la liste des appUsersMeetingList
+    // while et splice pour injecter la liste des participants dans la liste des appUsersMeetingList
     while (this.appUsersMeetingList.length > 0) {
       if (this.appUsersMeetingList[0].isParticipant) {
         this.appUsersMeetingListIsPart.push(this.appUsersMeetingList[0]);

@@ -10,8 +10,7 @@ import {Observable, Subscription, timer} from "rxjs";
   styleUrls: ['./meeting-board.component.css']
 })
 export class MeetingBoardComponent implements OnInit {
-  //lastUser = false ;
-  //meetingStarted = false;
+
   currentSpeaker : AppUserMeeting = {
     id: 0,
     name: "test",
@@ -32,21 +31,24 @@ export class MeetingBoardComponent implements OnInit {
   }
 
   startMeeting () {
-    this.usersListService.meetingStarted = true;
 
-    // localStorage.setItem("isMeetingStarted", JSON.stringify(this.usersListService.meetingStarted));
-    // let unTest = localStorage.getItem("isMeetingStarted")
+    this.usersListService.meetingStarted = true;
 
     this.usersListService.splitParticipationOrNot();
 
-    //générer la liste aléatoire de participants
+    // générer la liste aléatoire de participants
     this.usersListService.usersListRandomlySorted();
 
-    // afficher le premier participant dans le componant meeting board
-    this.currentSpeaker = this.usersListService.appUsersMeetingList[this.usersListService.index];
+    if (this.usersListService.appUsersMeetingListIsPart.length == 0) {
+      location.assign('http://localhost:4200/meeting')
+    } else {
 
-    this.subscription = this.obsTimer.subscribe(currTime => this.currTime = currTime)
-    this.usersListService.startChrono = new Date();
+      // afficher le premier participant dans le componant meeting board
+      this.currentSpeaker = this.usersListService.appUsersMeetingList[this.usersListService.index];
+
+      this.subscription = this.obsTimer.subscribe(currTime => this.currTime = currTime)
+      this.usersListService.startChrono = new Date();
+    }
   }
 
   nextSpeaker () {
@@ -96,7 +98,6 @@ export class MeetingBoardComponent implements OnInit {
         })
       })
     })
-    //localStorage.setItem(this.usersListService.index);
   }
 
   endMeeting(){
